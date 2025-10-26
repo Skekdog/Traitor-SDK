@@ -1,4 +1,5 @@
 local Frame = require("../../../Lib/UI/Components/Frame")
+local TextBox = require("../../../Lib/UI/Components/TextBox")
 local TextButton = require("../../../Lib/UI/Components/TextButton")
 local Prompt = require("../../../Lib/UI/Prompt")
 local LoadTemplate = require("../../Core/LoadTemplate")
@@ -46,6 +47,16 @@ local loadReferenceButton = TextButton({
 loadReferenceButton.Activated:Connect(function()
 	Navigation.SetPage(References)
 end)
+
+local docsLink = TextBox({
+	Text = "Documentation:\nhttps://devforum.roblox.com/t/-/4026195",
+	IsContainer = true,
+	FontSize = "Body",
+	Parent = mainPage,
+})
+
+docsLink.ClearTextOnFocus = false
+docsLink.TextEditable = false
 
 Navigation.SetPage(mainPage)
 

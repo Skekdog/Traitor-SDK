@@ -4,7 +4,9 @@ local TextLabel = require("./Components/TextLabel")
 
 export type Response = "OK" | "Cancel"
 
-local backgroundFrame = Frame({
+-- Button because frames allow clickthrough
+local backgroundFrame = TextButton({
+	Text = "",
 	CornerRadius = UDim.new(0, 0),
 
 	Size = UDim2.fromScale(1, 1),
@@ -14,6 +16,7 @@ local backgroundFrame = Frame({
 	Transparency = 0.5,
 
 	NoStroke = true,
+	Style = false,
 
 	Visible = false,
 
@@ -21,6 +24,7 @@ local backgroundFrame = Frame({
 	Parent = script.Parent,
 })
 
+backgroundFrame.AutoButtonColor = false
 backgroundFrame.BackgroundColor3 = Color3.new(0, 0, 0)
 
 local frame = Frame({
