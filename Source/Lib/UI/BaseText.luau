@@ -1,3 +1,4 @@
+local Types = require("../Types")
 local BaseGui = require("./BaseGui")
 
 export type TextSizeConstraints = {
@@ -14,7 +15,7 @@ local fontSizes: {[FontSize]: number} = {
 	["Body"] = 24,
 }
 
-export type BaseTextParams = BaseGui.BaseGuiParams & {
+export type BaseTextParams = Types.Override<BaseGui.BaseGuiParams, {
 	Text: string,
 
 	FontSize: FontSize?,
@@ -22,7 +23,7 @@ export type BaseTextParams = BaseGui.BaseGuiParams & {
 	TextTruncate: Enum.TextTruncate?,
 
 	TextSizeConstraints: TextSizeConstraints?,
-}
+}>
 
 local function BaseText<T>(gui: T & (TextLabel | TextButton | TextBox), params: BaseTextParams): ()
 	BaseGui(gui, params)

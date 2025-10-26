@@ -13,7 +13,6 @@ local backgroundFrame = Frame({
 
 	Transparency = 0.5,
 
-	NoStyle = true,
 	NoStroke = true,
 
 	Visible = false,

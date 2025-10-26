@@ -44,6 +44,7 @@ export type BaseGuiParams = {
 	AspectRatio: AspectRatio?,
 
 	Style: Style.Style | false?,
+	[any]: never,
 }
 
 local function BaseGui<T>(gui: T & GuiObject, params: BaseGuiParams): T

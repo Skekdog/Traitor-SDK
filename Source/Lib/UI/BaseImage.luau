@@ -1,13 +1,14 @@
+local Types = require("../Types")
 local BaseGui = require("./BaseGui")
 
-export type BaseImageParams = BaseGui.BaseGuiParams & {
+export type BaseImageParams = Types.Override<BaseGui.BaseGuiParams, {
 	Image: Content,
 	ScaleType: Enum.ScaleType?,
 	ImageColor3: Color3?,
 	ImageTransparency: number?,
-}
+}>
 
-local function BaseText<T>(gui: T & (ImageButton | ImageLabel), params: BaseImageParams): ()
+local function BaseImage<T>(gui: T & (ImageButton | ImageLabel), params: BaseImageParams): ()
 	BaseGui(gui, params)
 
 	gui.ImageContent = params.Image
@@ -16,4 +17,4 @@ local function BaseText<T>(gui: T & (ImageButton | ImageLabel), params: BaseImag
 	gui.ImageTransparency = params.ImageTransparency or 0
 end
 
-return BaseText
+return BaseImage
