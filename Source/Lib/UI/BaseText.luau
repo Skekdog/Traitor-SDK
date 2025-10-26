@@ -22,6 +22,9 @@ export type BaseTextParams = Types.Override<BaseGui.BaseGuiParams, {
 	TextWrapped: boolean?,
 	TextTruncate: Enum.TextTruncate?,
 
+	TextXAlignment: Enum.TextXAlignment?,
+	TextYAlignment: Enum.TextYAlignment?,
+
 	TextSizeConstraints: TextSizeConstraints?,
 }>
 
@@ -48,6 +51,9 @@ local function BaseText<T>(gui: T & (TextLabel | TextButton | TextBox), params: 
 		constraints.MaxTextSize = params.TextSizeConstraints.Max or math.huge
 		constraints.Parent = gui
 	end
+
+	gui.TextXAlignment = if params.TextXAlignment then params.TextXAlignment else Enum.TextXAlignment.Center
+	gui.TextYAlignment = if params.TextYAlignment then params.TextYAlignment else Enum.TextYAlignment.Center
 
 	gui.Text = params.Text
 end

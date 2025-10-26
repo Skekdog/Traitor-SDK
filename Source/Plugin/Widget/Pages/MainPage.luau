@@ -50,6 +50,8 @@ end)
 
 local docsLink = TextBox({
 	Text = "Documentation:\nhttps://devforum.roblox.com/t/-/4026195",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	TextYAlignment = Enum.TextYAlignment.Top,
 	IsContainer = true,
 	FontSize = "Body",
 	Parent = mainPage,
