@@ -5,7 +5,7 @@ local Prompt = require("../../../Lib/UI/Prompt")
 local LoadTemplate = require("../../Core/LoadTemplate")
 local Navigation = require("../Navigation")
 local Widget = require("./..")
-local References = require("./References")
+local Examples = require("./Examples")
 
 local mainPage = Frame({
 	Name = "Traitor Town 3 SDK",
@@ -22,21 +22,6 @@ do
 	listLayout.Parent = mainPage
 end
 
-local loadTemplateButton = TextButton({
-	Text = "Load Template",
-	FontSize = "Button",
-	AutomaticSize = Enum.AutomaticSize.Y,
-	Parent = mainPage,
-})
-
-loadTemplateButton.Activated:Connect(function()
-	Prompt(Widget.Widget, "Load Template", "This will overwrite the contents of ReplicatedStorage! Are you sure you wish to proceed?", function(response)
-		if response == "OK" then
-			LoadTemplate()
-		end
-	end)
-end)
-
 local loadReferenceButton = TextButton({
 	Text = "Load Reference",
 	FontSize = "Button",
@@ -45,7 +30,22 @@ local loadReferenceButton = TextButton({
 })
 
 loadReferenceButton.Activated:Connect(function()
-	Navigation.SetPage(References)
+	Prompt(Widget.Widget, "Load Template", "This will overwrite the contents of ReplicatedStorage! Are you sure you wish to proceed?", function(response)
+		if response == "OK" then
+			LoadTemplate()
+		end
+	end)
+end)
+
+local loadExampleButton = TextButton({
+	Text = "Load Example",
+	FontSize = "Button",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	Parent = mainPage,
+})
+
+loadExampleButton.Activated:Connect(function()
+	Navigation.SetPage(Examples)
 end)
 
 local docsLink = TextBox({

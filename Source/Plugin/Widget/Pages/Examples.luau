@@ -1,10 +1,10 @@
 local Frame = require("../../../Lib/UI/Components/Frame")
 local Widget = require("./..")
 
-local references = Frame({
-	Name = "References",
+local examples = Frame({
+	Name = "Examples",
 	Parent = Widget.Pages,
 	IsContainer = true,
 })
 
-return references
+return examples
