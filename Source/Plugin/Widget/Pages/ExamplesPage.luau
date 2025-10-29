@@ -48,6 +48,10 @@ for map, id in Examples.Maps do
 		AutomaticSize = Enum.AutomaticSize.Y,
 		FontSize = "Button",
 		LayoutOrder = 2000 + i,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		Padding = {
+			Left = 20,
+		},
 		Parent = examples,
 	})
 
@@ -64,6 +68,10 @@ for gamemode, id in Examples.Gamemodes do
 		AutomaticSize = Enum.AutomaticSize.Y,
 		FontSize = "Button",
 		LayoutOrder = 1000 + i,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		Padding = {
+			Left = 20,
+		},
 		Parent = examples,
 	})
 
