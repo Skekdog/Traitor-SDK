@@ -18,7 +18,7 @@ do
 	listLayout.Parent = examples
 end
 
-local gamemodesLabel = TextLabel({
+TextLabel({
 	Text = "Gamemodes",
 	LayoutOrder = 1000,
 	FontSize = "Heading",
@@ -29,7 +29,7 @@ local gamemodesLabel = TextLabel({
 	Parent = examples,
 })
 
-local mapsLabel = TextLabel({
+TextLabel({
 	Text = "Maps",
 	LayoutOrder = 2000,
 	FontSize = "Heading",
