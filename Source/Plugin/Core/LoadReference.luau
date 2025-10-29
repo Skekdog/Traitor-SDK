@@ -4,7 +4,7 @@ local FetchAsset = require("../../Lib/FetchAsset")
 local REFERENCE_ID = 116031459660559
 
 local function LoadReference(): ()
-	local template = FetchAsset(REFERENCE_ID):FindFirstChildWhichIsA("Instance")
+	local template = FetchAsset(REFERENCE_ID)
 	assert(template, "Invalid template")
 
 	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadReference", "TT3 SDK: Load Reference")
