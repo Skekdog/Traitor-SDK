@@ -4,7 +4,6 @@ local FetchAsset = require("../../Lib/FetchAsset")
 local LoadExample = {}
 
 function LoadExample.Map(id: number): ()
-	print(id)
 	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadMap", "TT3 SDK: Load Map")
 	if not identifier then
 		return warn("Could not create history record")
@@ -15,13 +14,20 @@ function LoadExample.Map(id: number): ()
 		return warn("Invalid map")
 	end
 
-	asset.Name = "Map"
-	asset.Parent = workspace
-	ChangeHistoryService:FinishRecording(identifier, Enum.FinishRecordingOperation.Commit)
+	local success, err = pcall(function()
+		asset.Name = "Map"
+		asset.Parent = workspace
+		return ""
+	end)
+
+	if not success then
+		warn(err)
+	end
+
+	ChangeHistoryService:FinishRecording(identifier, if success then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel)
 end
 
 function LoadExample.Gamemode(id: number): ()
-	print(id)
 	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadGamemode", "TT3 SDK: Load Gamemode")
 	if not identifier then
 		return warn("Could not create history record")
@@ -32,8 +38,16 @@ function LoadExample.Gamemode(id: number): ()
 		return warn("Invalid gamemode")
 	end
 
-	asset.Parent = workspace
-	ChangeHistoryService:FinishRecording(identifier, Enum.FinishRecordingOperation.Commit)
+	local success, err = pcall(function()
+		asset.Parent = workspace
+		return ""
+	end)
+
+	if not success then
+		warn(err)
+	end
+
+	ChangeHistoryService:FinishRecording(identifier, if success then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel)
 end
 
 return LoadExample
