@@ -4,6 +4,7 @@ local FetchAsset = require("../../Lib/FetchAsset")
 local LoadExample = {}
 
 function LoadExample.Map(id: number): ()
+	print(id)
 	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadMap", "TT3 SDK: Load Map")
 	if not identifier then
 		return warn("Could not create history record")
@@ -20,6 +21,7 @@ function LoadExample.Map(id: number): ()
 end
 
 function LoadExample.Gamemode(id: number): ()
+	print(id)
 	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadGamemode", "TT3 SDK: Load Gamemode")
 	if not identifier then
 		return warn("Could not create history record")
