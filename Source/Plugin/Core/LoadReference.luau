@@ -1,13 +1,13 @@
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local FetchAsset = require("../../Lib/FetchAsset")
 
-local TEMPLATE_ID = 116031459660559
+local REFERENCE_ID = 116031459660559
 
-local function LoadTemplate(): ()
-	local template = FetchAsset(TEMPLATE_ID):FindFirstChildWhichIsA("Instance")
+local function LoadReference(): ()
+	local template = FetchAsset(REFERENCE_ID):FindFirstChildWhichIsA("Instance")
 	assert(template, "Invalid template")
 
-	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadTemplate", "TT3 SDK: Load Template")
+	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadReference", "TT3 SDK: Load Reference")
 	if not identifier then
 		return
 	end
@@ -36,4 +36,4 @@ local function LoadTemplate(): ()
 	ChangeHistoryService:FinishRecording(identifier, Enum.FinishRecordingOperation.Commit)
 end
 
-return LoadTemplate
+return LoadReference
