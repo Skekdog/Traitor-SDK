@@ -106,6 +106,7 @@ local responsesFrame = Frame({
 
 	AutomaticSize = Enum.AutomaticSize.Y,
 	IsContainer = true,
+	ClipsDescendants = false,
 
 	Name = "ResponsesFrame",
 	Parent = frame,

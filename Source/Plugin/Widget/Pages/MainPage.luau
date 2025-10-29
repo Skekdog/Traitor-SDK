@@ -12,6 +12,13 @@ local mainPage = Frame({
 	LayoutOrder = -1,
 	Parent = Widget.Pages,
 
+	Padding = {
+		Left = 5,
+		Right = 5,
+		Top = 5,
+		Bottom = 5,
+	},
+
 	IsContainer = true,
 })
 
