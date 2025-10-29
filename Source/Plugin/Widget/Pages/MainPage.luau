@@ -5,7 +5,7 @@ local Prompt = require("../../../Lib/UI/Prompt")
 local LoadTemplate = require("../../Core/LoadTemplate")
 local Navigation = require("../Navigation")
 local Widget = require("./..")
-local Examples = require("./Examples")
+local Examples = require("./ExamplesPage")
 
 local mainPage = Frame({
 	Name = "Traitor Town 3 SDK",
