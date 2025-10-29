@@ -6,14 +6,15 @@ export type TextSizeConstraints = {
 	Max: number?,
 }
 
-export type FontSize = number | "Title" | "Button" | "LargerButton" | "Body"
-
-local fontSizes: {[FontSize]: number} = {
+local fontSizes = {
 	["Title"] = 36,
+	["Heading"] = 28,
 	["Button"] = 24,
 	["LargerButton"] = 32,
 	["Body"] = 24,
 }
+
+export type FontSize = number | keyof<typeof(fontSizes)>
 
 export type BaseTextParams = Types.Override<BaseGui.BaseGuiParams, {
 	Text: string,
