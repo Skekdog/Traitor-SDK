@@ -2,14 +2,14 @@
 local Examples = {}
 
 Examples.Gamemodes = {
-	Framed = 121973656567076,
-	Elimination = 80732458427790,
-	ThoseYouTrust = 103037367582885,
+	Framed = 85240118809989,
+	Elimination = 73629714476044,
+	ThoseYouTrust = 117084689582342,
 } :: {[string]: number}
 
 Examples.Maps = {
-	Facility = 132481062170883,
-	TestMap = 138781832678807,
+	Facility = 122192823669641,
+	TestMap = 72787247468299,
 } :: {[string]: number}
 
 return Examples
