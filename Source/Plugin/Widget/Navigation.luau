@@ -70,6 +70,9 @@ pageLayout.TweenTime = 0.2
 pageLayout.EasingStyle = Enum.EasingStyle.Exponential
 pageLayout.EasingDirection = Enum.EasingDirection.In
 pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
+pageLayout.TouchInputEnabled = false
+pageLayout.ScrollWheelInputEnabled = false
+pageLayout.GamepadInputEnabled = false
 
 local firstPage: Frame?
 function Navigation.SetPage(page: Frame): ()
