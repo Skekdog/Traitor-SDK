@@ -9,7 +9,7 @@ local function LoadReference(): ()
 
 	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadReference", "TT3 SDK: Load Reference")
 	if not identifier then
-		return
+		return warn("Could not create history record")
 	end
 
 	local success, err: string = pcall(function()
