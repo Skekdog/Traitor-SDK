@@ -1,8 +1,13 @@
+local Selection = game:GetService("Selection")
+local Message = require("../../../Lib/Message")
 local Frame = require("../../../Lib/UI/Components/Frame")
 local TextBox = require("../../../Lib/UI/Components/TextBox")
 local TextButton = require("../../../Lib/UI/Components/TextButton")
 local Prompt = require("../../../Lib/UI/Prompt")
+local Waypoint = require("../../../Lib/Waypoint")
 local LoadReference = require("../../Core/LoadReference")
+local PrepareExportMap = require("../../Core/PrepareExportMap")
+local Publish = require("../../Core/Publish")
 local Navigation = require("../Navigation")
 local Widget = require("./..")
 local Examples = require("./ExamplesPage")
@@ -53,6 +58,44 @@ local loadExampleButton = TextButton({
 
 loadExampleButton.Activated:Connect(function()
 	Navigation.SetPage(Examples)
+end)
+
+local publishMapButton = TextButton({
+	Text = "Publish Map",
+	FontSize = "Button",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	Parent = mainPage,
+})
+
+publishMapButton.Activated:Connect(function()
+	local selection = Selection:Get()
+	if #selection ~= 1 then
+		Message("Please select exactly one instance to publish.")
+		return
+	end
+
+	Waypoint("PublishMap", function()
+		local map = selection[1]
+		PrepareExportMap(map)
+		Publish()
+	end)
+end)
+
+local publishGamemodeButton = TextButton({
+	Text = "Publish Gamemode",
+	FontSize = "Button",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	Parent = mainPage,
+})
+
+publishGamemodeButton.Activated:Connect(function()
+	local selection = Selection:Get()
+	if #selection ~= 1 then
+		Message("Please select exactly one instance to publish.")
+		return
+	end
+
+	Waypoint("PublishGamemode", Publish)
 end)
 
 local docsLink = TextBox({
