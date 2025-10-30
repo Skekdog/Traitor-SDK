@@ -5,8 +5,8 @@ local Message = require("../../Lib/Message")
 local REFERENCE_ID = 116031459660559
 
 local function LoadReference(): ()
-	local template = FetchAsset(REFERENCE_ID)
-	assert(template, "Invalid template")
+	local reference = FetchAsset(REFERENCE_ID)
+	assert(reference, "Invalid reference")
 
 	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadReference", "TT3 SDK: Load Reference")
 	if not identifier then
@@ -14,7 +14,7 @@ local function LoadReference(): ()
 	end
 
 	local success, err: string = pcall(function()
-		for _, child in template:GetChildren() do
+		for _, child in reference:GetChildren() do
 			local service = game:GetService(child.Name)
 
 			for _, object in service:GetChildren() do
@@ -29,12 +29,13 @@ local function LoadReference(): ()
 	end, "")
 
 	if not success then
-		Message("Failed to load template: " .. err)
+		Message("Failed to load reference: " .. err)
 		ChangeHistoryService:FinishRecording(identifier, Enum.FinishRecordingOperation.Cancel)
 		return
 	end
 
 	ChangeHistoryService:FinishRecording(identifier, Enum.FinishRecordingOperation.Commit)
+	Message("Reference has been loaded!", "success")
 end
 
 return LoadReference

@@ -26,6 +26,7 @@ function LoadExample.Map(id: number): ()
 	end
 
 	ChangeHistoryService:FinishRecording(identifier, if success then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel)
+	Message("Map has been loaded! You may find it in Workspace.", "success")
 end
 
 function LoadExample.Gamemode(id: number): ()
@@ -49,6 +50,7 @@ function LoadExample.Gamemode(id: number): ()
 	end
 
 	ChangeHistoryService:FinishRecording(identifier, if success then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel)
+	Message("Gamemode has been loaded! You may find it in Workspace.", "success")
 end
 
 return LoadExample
