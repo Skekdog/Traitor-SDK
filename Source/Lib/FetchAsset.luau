@@ -1,3 +1,4 @@
+local Message = require("./Message")
 
 local function FetchAsset(id: number): Instance?
 	local success, result: string | Instance = pcall(function()
@@ -8,7 +9,7 @@ local function FetchAsset(id: number): Instance?
 		return result :: Instance?
 	end
 
-	warn(result)
+	Message(result :: string)
 	return nil
 end
 

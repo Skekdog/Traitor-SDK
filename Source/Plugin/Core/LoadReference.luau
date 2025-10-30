@@ -1,5 +1,6 @@
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local FetchAsset = require("../../Lib/FetchAsset")
+local Message = require("../../Lib/Message")
 
 local REFERENCE_ID = 116031459660559
 
@@ -9,7 +10,7 @@ local function LoadReference(): ()
 
 	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadReference", "TT3 SDK: Load Reference")
 	if not identifier then
-		return warn("Could not create history record")
+		return Message("Could not create history record")
 	end
 
 	local success, err: string = pcall(function()
@@ -28,7 +29,7 @@ local function LoadReference(): ()
 	end, "")
 
 	if not success then
-		warn("Failed to load template:", err)
+		Message("Failed to load template: " .. err)
 		ChangeHistoryService:FinishRecording(identifier, Enum.FinishRecordingOperation.Cancel)
 		return
 	end

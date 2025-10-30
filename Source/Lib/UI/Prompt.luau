@@ -179,7 +179,7 @@ local function runAndClose<T>(callback: (value: T) -> (), value: T): (...any) ->
 	end
 end
 
-local function Prompt(widget: DockWidgetPluginGui, title: string, message: string, onResponse: (response: Response) -> (), okText: string?, cancelText: string?): ()
+local function Prompt(widget: DockWidgetPluginGui, title: string, message: string, onResponse: (response: Response) -> (), okText: string | false?, cancelText: string | false?): ()
 	reset()
 
 	titleLabel.Text = "<b>" .. title .. "</b>"
@@ -187,10 +187,14 @@ local function Prompt(widget: DockWidgetPluginGui, title: string, message: strin
 
 	if okText then
 		confirmButton.Text = okText
+	elseif okText == false then
+		confirmButton.Visible = false
 	end
 
 	if cancelText then
 		cancelButton.Text = cancelText
+	elseif cancelText == false then
+		cancelButton.Visible = false
 	end
 
 	confirmConn = confirmButton.Activated:Connect(runAndClose(onResponse, "OK" :: "OK"))
