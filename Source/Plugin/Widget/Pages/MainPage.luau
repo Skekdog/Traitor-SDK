@@ -7,6 +7,7 @@ local Prompt = require("../../../Lib/UI/Prompt")
 local Waypoint = require("../../../Lib/Waypoint")
 local LoadReference = require("../../Core/LoadReference")
 local PrepareExportMap = require("../../Core/PrepareExportMap")
+local PrepareSounds = require("../../Core/PrepareSounds")
 local Publish = require("../../Core/Publish")
 local Navigation = require("../Navigation")
 local Widget = require("./..")
@@ -76,6 +77,12 @@ publishMapButton.Activated:Connect(function()
 
 	Waypoint("PublishMap", function()
 		local map = selection[1]
+
+		if map.Name == "Map" then
+			Message("Ensure map name is correctly set before publishing.")
+			return
+		end
+
 		PrepareExportMap(map)
 		Publish()
 	end)
@@ -95,7 +102,11 @@ publishGamemodeButton.Activated:Connect(function()
 		return
 	end
 
-	Waypoint("PublishGamemode", Publish)
+	Waypoint("PublishGamemode", function()
+		local gamemode = selection[1]
+		PrepareSounds(gamemode)
+		Publish()
+	end)
 end)
 
 local docsLink = TextBox({
