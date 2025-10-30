@@ -9,7 +9,7 @@ Examples.Gamemodes = {
 
 Examples.Maps = {
 	Facility = 122192823669641,
-	TestMap = 72787247468299,
+	TestMap = 125557102994928,
 } :: {[string]: number}
 
 return Examples
