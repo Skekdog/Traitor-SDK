@@ -1,5 +1,7 @@
 local Lighting = game:GetService("Lighting")
 local MaterialService = game:GetService("MaterialService")
+local Players = game:GetService("Players")
+local StudioService = game:GetService("StudioService")
 local PrepareSounds = require("./PrepareSounds")
 
 local function removeOld(map: Instance, name: string): ()
@@ -90,14 +92,34 @@ end
 local function materials(map: Instance): ()
 	removeOld(map, "MaterialVariants")
 
+	local variants = MaterialService:GetChildren()
+	if #variants == 0 then
+		return
+	end
+
 	local folder = Instance.new("Configuration")
 	folder.Name = "MaterialVariants"
 
-	for _, material in MaterialService:GetChildren() do
+	for _, material in variants do
 		material:Clone().Parent = folder
 	end
 
 	folder.Parent = map
+end
+
+local function gravity(map: Instance): ()
+	map:SetAttribute("Gravity", workspace.Gravity)
+end
+
+local function defaultAttributes(map: Instance): ()
+	if not map:GetAttribute("Authors") then
+		local success, username: string = pcall(Players.GetNameFromUserIdAsync, Players, StudioService:GetUserId())
+		map:SetAttribute("Authors", if success then "@" .. username else "unknown author")
+	end
+
+	if not map:GetAttribute("Description") then
+		map:SetAttribute("Description", "No description")
+	end
 end
 
 local function PrepareExportMap(map: Instance): ()
@@ -107,6 +129,8 @@ local function PrepareExportMap(map: Instance): ()
 	waterSettings(map)
 	lightingSettings(map)
 	materials(map)
+	gravity(map)
+	defaultAttributes(map)
 end
 
 return PrepareExportMap
