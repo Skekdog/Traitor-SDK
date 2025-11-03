@@ -185,12 +185,14 @@ local function Prompt(widget: DockWidgetPluginGui, title: string, message: strin
 	titleLabel.Text = "<b>" .. title .. "</b>"
 	messageLabel.Text = "<i>" .. message .. "</i>"
 
+	confirmButton.Visible = true
 	if okText then
 		confirmButton.Text = okText
 	elseif okText == false then
 		confirmButton.Visible = false
 	end
 
+	cancelButton.Visible = true
 	if cancelText then
 		cancelButton.Text = cancelText
 	elseif cancelText == false then
