@@ -4,7 +4,7 @@ local Frame = require("../Lib/UI/Components/Frame")
 
 local Widget = {}
 
-local widget = GetPlugin:CreateDockWidgetPluginGui("TT3SDK", DockWidgetPluginGuiInfo.new(
+local widget = GetPlugin:CreateDockWidgetPluginGui("TraitorSDK", DockWidgetPluginGuiInfo.new(
 	Enum.InitialDockState.Float,
 	false,
 	true,
@@ -15,8 +15,8 @@ local widget = GetPlugin:CreateDockWidgetPluginGui("TT3SDK", DockWidgetPluginGui
 	)
 )
 
-widget.Name = "TT3 SDK"
-widget.Title = "TT3 SDK"
+widget.Name = "Traitor! SDK"
+widget.Title = "Traitor! SDK"
 widget.ResetOnSpawn = false
 widget.Enabled = false
 

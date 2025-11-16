@@ -14,7 +14,7 @@ local Widget = require("./..")
 local Examples = require("./ExamplesPage")
 
 local mainPage = Frame({
-	Name = "Traitor Town 3 SDK",
+	Name = "Traitor! SDK",
 	LayoutOrder = -1,
 	Parent = Widget.Pages,
 

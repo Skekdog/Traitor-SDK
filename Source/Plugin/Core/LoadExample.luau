@@ -5,7 +5,7 @@ local Message = require("../../Lib/Message")
 local LoadExample = {}
 
 function LoadExample.Map(id: number): ()
-	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadMap", "TT3 SDK: Load Map")
+	local identifier = ChangeHistoryService:TryBeginRecording("Traitor-SDK-LoadMap", "Traitor SDK: Load Map")
 	if not identifier then
 		return Message("Could not create history record")
 	end
@@ -30,7 +30,7 @@ function LoadExample.Map(id: number): ()
 end
 
 function LoadExample.Gamemode(id: number): ()
-	local identifier = ChangeHistoryService:TryBeginRecording("TT3-SDK-LoadGamemode", "TT3 SDK: Load Gamemode")
+	local identifier = ChangeHistoryService:TryBeginRecording("Traitor-SDK-LoadGamemode", "Traitor SDK: Load Gamemode")
 	if not identifier then
 		return Message("Could not create history record")
 	end

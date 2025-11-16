@@ -4,8 +4,8 @@ local plugin = GetPlugin
 
 local module = {}
 
-local toolbar = plugin:CreateToolbar("TT3 SDK")
-local button = toolbar:CreateButton("TT3 SDK", "Opens the TT3 SDK Menu", "rbxassetid://136898909673920")
+local toolbar = plugin:CreateToolbar("Traitor! SDK")
+local button = toolbar:CreateButton("Traitor!", "Opens the Traitor! SDK Menu", "rbxassetid://136898909673920")
 button.ClickableWhenViewportHidden = true
 
 module.Toolbar = toolbar

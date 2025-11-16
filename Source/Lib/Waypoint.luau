@@ -2,8 +2,8 @@ local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local Message = require("./Message")
 
 local function Waypoint(name: string, operation: () -> ()): ()
-	name = "TT3-SDK-" .. name
-	local displayName = "TT3 SDK: " .. name
+	name = "Traitor-SDK-" .. name
+	local displayName = "Traitor SDK: " .. name
 
 	local identifier = ChangeHistoryService:TryBeginRecording(name, displayName)
 	if not identifier then
