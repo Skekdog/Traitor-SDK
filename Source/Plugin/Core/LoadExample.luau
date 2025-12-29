@@ -1,6 +1,7 @@
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local FetchAsset = require("../../Lib/FetchAsset")
 local Message = require("../../Lib/Message")
+local Waypoint = require("../../Lib/Waypoint")
 
 local LoadExample = {}
 
@@ -51,6 +52,26 @@ function LoadExample.Gamemode(id: number): ()
 
 	ChangeHistoryService:FinishRecording(identifier, if success then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel)
 	Message("Gamemode has been loaded! You may find it in Workspace.", "success")
+end
+
+function LoadExample.Items(id: number): ()
+	Waypoint("LoadItems", function()
+		local asset = FetchAsset(id)
+		if not asset then
+			return Message("Failed to fetch items")
+		end
+
+		local success, err = pcall(function()
+			asset.Parent = workspace
+			return ""
+		end)
+
+		if not success then
+			Message(err)
+		end
+	end)
+
+	Message("Items have been loaded! You may find them in Workspace.", "success")
 end
 
 return LoadExample

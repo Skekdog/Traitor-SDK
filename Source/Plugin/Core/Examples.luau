@@ -12,4 +12,6 @@ Examples.Maps = {
 	TestMap = 125557102994928,
 } :: {[string]: number}
 
+Examples.Items = 71521398249549
+
 return Examples

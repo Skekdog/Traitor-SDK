@@ -47,6 +47,17 @@ TextLabel({
 	Parent = examples,
 })
 
+TextLabel({
+	Text = "Items",
+	LayoutOrder = 3000,
+	FontSize = "Heading",
+	IsContainer = true,
+	AutomaticSize = Enum.AutomaticSize.Y,
+	TextXAlignment = Enum.TextXAlignment.Left,
+	Name = "ItemsLabel",
+	Parent = examples,
+})
+
 local i = 0
 for map, id in Examples.Maps do
 	i += 1
@@ -84,6 +95,24 @@ for gamemode, id in Examples.Gamemodes do
 
 	button.Activated:Connect(function()
 		LoadExample.Gamemode(id)
+	end)
+end
+
+do
+	local button = TextButton({
+		Text = "Items",
+		AutomaticSize = Enum.AutomaticSize.Y,
+		FontSize = "Button",
+		LayoutOrder = 3001,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		Padding = {
+			Left = 20,
+		},
+		Parent = examples,
+	})
+
+	button.Activated:Connect(function()
+		LoadExample.Items(Examples.Items)
 	end)
 end
 
