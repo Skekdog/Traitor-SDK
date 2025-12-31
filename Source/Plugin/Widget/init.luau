@@ -4,7 +4,7 @@ local Frame = require("../Lib/UI/Components/Frame")
 
 local Widget = {}
 
-local widget = GetPlugin:CreateDockWidgetPluginGui("TraitorSDK", DockWidgetPluginGuiInfo.new(
+local widget = GetPlugin:CreateDockWidgetPluginGuiAsync("TraitorSDK", DockWidgetPluginGuiInfo.new(
 	Enum.InitialDockState.Float,
 	false,
 	true,
