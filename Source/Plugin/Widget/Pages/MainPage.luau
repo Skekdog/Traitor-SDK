@@ -35,14 +35,14 @@ do
 	listLayout.Parent = mainPage
 end
 
-local loadReferenceButton = TextButton({
-	Text = "Load Reference",
+local loadAPIReferenceButton = TextButton({
+	Text = "Load API Reference",
 	FontSize = "Button",
 	AutomaticSize = Enum.AutomaticSize.Y,
 	Parent = mainPage,
 })
 
-loadReferenceButton.Activated:Connect(function()
+loadAPIReferenceButton.Activated:Connect(function()
 	Prompt(Widget.Widget, "Load Template", "This will overwrite the contents of ReplicatedStorage! Are you sure you wish to proceed?", function(response)
 		if response == "OK" then
 			LoadReference()
