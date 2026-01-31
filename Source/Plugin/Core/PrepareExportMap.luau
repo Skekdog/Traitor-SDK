@@ -31,6 +31,8 @@ local function terrainColors(map: Instance): ()
 			folder:SetAttribute(material.Name, workspace.Terrain:GetMaterialColor(material))
 		end)
 	end
+
+	folder.Parent = map
 end
 
 local waterProperties = {
