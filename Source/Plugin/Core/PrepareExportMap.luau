@@ -128,8 +128,9 @@ end
 local function PrepareExportMap(map: Instance): Instance
 	map = map:Clone()
 
+	map = SmuggleScripts(map)
+
 	SmuggleSounds(map)
-	SmuggleScripts(map)
 	terrainRegion(map)
 	terrainColors(map)
 	waterSettings(map)
