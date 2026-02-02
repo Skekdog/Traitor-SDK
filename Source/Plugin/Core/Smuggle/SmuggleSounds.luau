@@ -1,5 +1,5 @@
 
-local function PrepareSounds(of: Instance): ()
+local function SmuggleSounds(of: Instance): ()
 	for _, sound in of:GetDescendants() do
 		if sound:IsA("Sound") and sound.SoundId ~= "" then
 			sound:SetAttribute("RobloxAvoidSoundId", sound.SoundId)
@@ -8,4 +8,4 @@ local function PrepareSounds(of: Instance): ()
 	end
 end
 
-return PrepareSounds
+return SmuggleSounds

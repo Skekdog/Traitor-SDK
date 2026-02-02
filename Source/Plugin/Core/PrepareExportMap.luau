@@ -2,7 +2,8 @@ local Lighting = game:GetService("Lighting")
 local MaterialService = game:GetService("MaterialService")
 local Players = game:GetService("Players")
 local StudioService = game:GetService("StudioService")
-local PrepareSounds = require("./PrepareSounds")
+local SmuggleScripts = require("./Smuggle/SmuggleScripts")
+local SmuggleSounds = require("./Smuggle/SmuggleSounds")
 
 local function removeOld(map: Instance, name: string): ()
 	local old = map:FindFirstChild(name)
@@ -124,39 +125,11 @@ local function defaultAttributes(map: Instance): ()
 	end
 end
 
-local function smuggleScripts(map: Instance): ()
-	for _, instance in map:QueryDescendants("LuaSourceContainer") do
-		assert(instance:IsA("LocalScript") or instance:IsA("Script") or instance:IsA("ModuleScript"))
-
-		local smuggled = Instance.new("Configuration")
-		smuggled.Name = instance.Name
-
-		for k, v in instance:GetAttributes() do
-			smuggled:SetAttribute(k, v)
-		end
-
-		for _, tag in instance:GetTags() do
-			smuggled:AddTag(tag)
-		end
-
-		smuggled:AddTag("Smuggled-Script")
-		smuggled:SetAttribute("Smuggled-Source", instance.Source)
-		smuggled:SetAttribute("Smuggled-Class", instance.ClassName)
-
-		if instance:IsA("BaseScript") then
-			smuggled:SetAttribute("Smuggled-RunContext", instance.RunContext)
-			smuggled:SetAttribute("Smuggled-Enabled", instance.Enabled)
-		end
-
-		smuggled.Parent = instance.Parent
-		instance.Parent = nil
-	end
-end
-
 local function PrepareExportMap(map: Instance): Instance
 	map = map:Clone()
-	PrepareSounds(map)
-	smuggleScripts(map)
+
+	SmuggleSounds(map)
+	SmuggleScripts(map)
 	terrainRegion(map)
 	terrainColors(map)
 	waterSettings(map)
@@ -164,6 +137,7 @@ local function PrepareExportMap(map: Instance): Instance
 	materials(map)
 	gravity(map)
 	defaultAttributes(map)
+
 	map.Parent = workspace
 	return map
 end
