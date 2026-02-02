@@ -83,8 +83,8 @@ publishMapButton.Activated:Connect(function()
 			return
 		end
 
-		PrepareExportMap(map)
-		Publish()
+		map = PrepareExportMap(map)
+		Publish(map)
 	end)
 end)
 
@@ -105,7 +105,7 @@ publishGamemodeButton.Activated:Connect(function()
 	Waypoint("PublishGamemode", function()
 		local gamemode = selection[1]
 		PrepareSounds(gamemode)
-		Publish()
+		Publish(gamemode)
 	end)
 end)
 

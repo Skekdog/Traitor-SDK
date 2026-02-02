@@ -124,8 +124,39 @@ local function defaultAttributes(map: Instance): ()
 	end
 end
 
-local function PrepareExportMap(map: Instance): ()
+local function smuggleScripts(map: Instance): ()
+	for _, instance in map:QueryDescendants("LuaSourceContainer") do
+		assert(instance:IsA("LocalScript") or instance:IsA("Script") or instance:IsA("ModuleScript"))
+
+		local smuggled = Instance.new("Configuration")
+		smuggled.Name = instance.Name
+
+		for k, v in instance:GetAttributes() do
+			smuggled:SetAttribute(k, v)
+		end
+
+		for _, tag in instance:GetTags() do
+			smuggled:AddTag(tag)
+		end
+
+		smuggled:AddTag("Smuggled-Script")
+		smuggled:SetAttribute("Smuggled-Source", instance.Source)
+		smuggled:SetAttribute("Smuggled-Class", instance.ClassName)
+
+		if instance:IsA("BaseScript") then
+			smuggled:SetAttribute("Smuggled-RunContext", instance.RunContext)
+			smuggled:SetAttribute("Smuggled-Enabled", instance.Enabled)
+		end
+
+		smuggled.Parent = instance.Parent
+		instance.Parent = nil
+	end
+end
+
+local function PrepareExportMap(map: Instance): Instance
+	map = map:Clone()
 	PrepareSounds(map)
+	smuggleScripts(map)
 	terrainRegion(map)
 	terrainColors(map)
 	waterSettings(map)
@@ -133,6 +164,8 @@ local function PrepareExportMap(map: Instance): ()
 	materials(map)
 	gravity(map)
 	defaultAttributes(map)
+	map.Parent = workspace
+	return map
 end
 
 return PrepareExportMap
