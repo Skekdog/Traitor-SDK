@@ -42,7 +42,7 @@ end
 
 local lastPage: Frame?
 local backButton = ImageButton({
-	Image = Content.fromAssetId(80230791232326),
+	Image = Content.fromAssetId(118535387427240),
 	Parent = controlsFrame,
 	Size = UDim2.fromScale(0.5, 1),
 	LayoutOrder = 2,
@@ -55,13 +55,17 @@ local backButton = ImageButton({
 })
 
 local homeButton = ImageButton({
-	Image = Content.fromAssetId(18923169473),
+	Image = Content.fromAssetId(15927926340),
 	Parent = controlsFrame,
 	Size = UDim2.fromScale(0.5, 1),
 	AspectRatio = {
 		Ratio = 1,
 	},
 	IsContainer = true,
+
+	Style = {
+		ImageColor3 = Enum.StudioStyleGuideColor.MainText,
+	},
 })
 
 local pageLayout = Instance.new("UIPageLayout")
