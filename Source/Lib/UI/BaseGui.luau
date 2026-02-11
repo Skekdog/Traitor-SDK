@@ -5,7 +5,7 @@ export type Padding = {
 	Right: UDim | number?,
 	Top: UDim | number?,
 	Bottom: UDim | number?,
-}
+} | number
 
 export type SizeConstraints = {
 	Min: Vector2?,
@@ -102,10 +102,19 @@ local function BaseGui<T>(gui: T & GuiObject, params: BaseGuiParams): T
 
 	if params.Padding then
 		local padding = Instance.new("UIPadding")
-		padding.PaddingLeft = if typeof(params.Padding.Left) == "number" then UDim.new(0, params.Padding.Left) else params.Padding.Left or UDim.new(0, 0)
-		padding.PaddingRight = if typeof(params.Padding.Right) == "number" then UDim.new(0, params.Padding.Right) else params.Padding.Right or UDim.new(0, 0)
-		padding.PaddingTop = if typeof(params.Padding.Top) == "number" then UDim.new(0, params.Padding.Top) else params.Padding.Top or UDim.new(0, 0)
-		padding.PaddingBottom = if typeof(params.Padding.Bottom) == "number" then UDim.new(0, params.Padding.Bottom) else params.Padding.Bottom or UDim.new(0, 0)
+
+		if typeof(params.Padding) == "number" then
+			padding.PaddingLeft = UDim.new(0, params.Padding)
+			padding.PaddingRight = UDim.new(0, params.Padding)
+			padding.PaddingTop = UDim.new(0, params.Padding)
+			padding.PaddingBottom = UDim.new(0, params.Padding)
+		else
+			padding.PaddingLeft = if typeof(params.Padding.Left) == "number" then UDim.new(0, params.Padding.Left) else params.Padding.Left or UDim.new(0, 0)
+			padding.PaddingRight = if typeof(params.Padding.Right) == "number" then UDim.new(0, params.Padding.Right) else params.Padding.Right or UDim.new(0, 0)
+			padding.PaddingTop = if typeof(params.Padding.Top) == "number" then UDim.new(0, params.Padding.Top) else params.Padding.Top or UDim.new(0, 0)
+			padding.PaddingBottom = if typeof(params.Padding.Bottom) == "number" then UDim.new(0, params.Padding.Bottom) else params.Padding.Bottom or UDim.new(0, 0)
+		end
+
 		padding.Parent = gui
 	end
 
