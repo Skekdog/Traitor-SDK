@@ -2,8 +2,6 @@ local Lighting = game:GetService("Lighting")
 local MaterialService = game:GetService("MaterialService")
 local Players = game:GetService("Players")
 local StudioService = game:GetService("StudioService")
-local SmuggleScripts = require("./Smuggle/SmuggleScripts")
-local SmuggleSounds = require("./Smuggle/SmuggleSounds")
 
 local function removeOld(map: Instance, name: string): ()
 	local old = map:FindFirstChild(name)
@@ -128,9 +126,6 @@ end
 local function PrepareExportMap(map: Instance): Instance
 	map = map:Clone()
 
-	map = SmuggleScripts(map)
-
-	SmuggleSounds(map)
 	terrainRegion(map)
 	terrainColors(map)
 	waterSettings(map)
@@ -139,7 +134,6 @@ local function PrepareExportMap(map: Instance): Instance
 	gravity(map)
 	defaultAttributes(map)
 
-	map.Parent = workspace
 	return map
 end
 

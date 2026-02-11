@@ -6,7 +6,6 @@ local NilClearChildren = require("../../Lib/NilClearChildren")
 local Prompt = require("../../Lib/UI/Prompt")
 local Waypoint = require("../../Lib/Waypoint")
 local Widget = require("../Widget")
-local LoadScripts = require("./Smuggle/LoadScripts")
 
 local LoadExample = {}
 
@@ -95,8 +94,6 @@ function LoadExample.Map(id: number): ()
 			end
 		end
 
-		asset = LoadScripts(asset)
-
 		asset.Parent = workspace
 	end)
 end
@@ -105,8 +102,6 @@ function LoadExample.Gamemode(id: number): ()
 	Waypoint("LoadGamemode", function()
 		local asset = FetchAsset(id)
 		assert(asset, "Invalid gamemode")
-
-		asset = LoadScripts(asset)
 
 		asset.Parent = workspace
 
