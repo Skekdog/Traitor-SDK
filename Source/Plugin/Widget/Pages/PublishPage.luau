@@ -1,4 +1,5 @@
 local Selection = game:GetService("Selection")
+local SerializationService = game:GetService("SerializationService")
 local Message = require("../../../Lib/Message")
 local Frame = require("../../../Lib/UI/Components/Frame")
 local TextBox = require("../../../Lib/UI/Components/TextBox")
@@ -51,6 +52,13 @@ local function addAssetButton(asset: number, tryPublish: (number) -> ()): ()
 		},
 	})
 
+	local listLayout = Instance.new("UIListLayout")
+	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	listLayout.Padding = UDim.new(0, 8)
+	listLayout.HorizontalFlex = Enum.UIFlexAlignment.SpaceBetween
+	listLayout.FillDirection = Enum.FillDirection.Horizontal
+	listLayout.Parent = frame
+
 	local label = TextBox({
 		Name = "Label",
 		Parent = frame,
@@ -62,10 +70,16 @@ local function addAssetButton(asset: number, tryPublish: (number) -> ()): ()
 		Text = tostring(asset),
 		FontSize = "Button",
 		TextXAlignment = Enum.TextXAlignment.Left,
+
+		LayoutOrder = 0,
 	})
 
 	label.TextEditable = false
 	label.ClearTextOnFocus = false
+
+	local flexItem = Instance.new("UIFlexItem")
+	flexItem.FlexMode = Enum.UIFlexMode.Fill
+	flexItem.Parent = label
 
 	TextButton({
 		Text = "Overwrite",
@@ -82,6 +96,8 @@ local function addAssetButton(asset: number, tryPublish: (number) -> ()): ()
 
 		Name = "OverwriteButton",
 		Parent = frame,
+
+		LayoutOrder = 1,
 	}).Activated:Connect(function()
 		Prompt(Widget.Widget, "Overwrite", "Are you sure you want to overwrite " .. asset .. "?", function(response)
 			if response == "Cancel" then
@@ -90,6 +106,31 @@ local function addAssetButton(asset: number, tryPublish: (number) -> ()): ()
 
 			tryPublish(asset)
 		end)
+	end)
+
+	TextButton({
+		Text = "Load",
+		FontSize = "Button",
+		AutomaticSize = Enum.AutomaticSize.XY,
+
+		AnchorPoint = Vector2.xAxis,
+
+		Name = "LoadButton",
+		Parent = frame,
+
+		LayoutOrder = 2,
+
+		Padding = {
+			Left = 5,
+			Right = 5,
+		}
+	}).Activated:Connect(function()
+		local response = Net.FetchAssetContent(asset)
+		if not response.Success then
+			return warn(response.Result)
+		end
+
+		SerializationService:DeserializeInstancesAsync(buffer.fromstring(response.Result))[1].Parent = workspace
 	end)
 end
 
