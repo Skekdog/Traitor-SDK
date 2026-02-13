@@ -1,6 +1,7 @@
 local Lighting = game:GetService("Lighting")
 local MaterialService = game:GetService("MaterialService")
 local Players = game:GetService("Players")
+local SerializationService = game:GetService("SerializationService")
 local StudioService = game:GetService("StudioService")
 
 local function removeOld(map: Instance, name: string): ()
@@ -123,7 +124,7 @@ local function defaultAttributes(map: Instance): ()
 	end
 end
 
-local function PrepareExportMap(map: Instance): Instance
+local function PrepareExportMap(map: Instance): buffer
 	map = map:Clone()
 
 	terrainRegion(map)
@@ -134,7 +135,7 @@ local function PrepareExportMap(map: Instance): Instance
 	gravity(map)
 	defaultAttributes(map)
 
-	return map
+	return SerializationService:SerializeInstancesAsync({map})
 end
 
 return PrepareExportMap

@@ -1,8 +1,9 @@
+local SerializationService = game:GetService("SerializationService")
 
-local function PrepareExportGamemode(gamemode: Instance): Instance
+local function PrepareExportGamemode(gamemode: Instance): buffer
 	gamemode = gamemode:Clone()
 
-	return gamemode
+	return SerializationService:SerializeInstancesAsync({gamemode})
 end
 
 return PrepareExportGamemode

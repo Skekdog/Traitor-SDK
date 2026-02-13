@@ -1,17 +1,12 @@
-local Selection = game:GetService("Selection")
-local Message = require("../../../Lib/Message")
 local Frame = require("../../../Lib/UI/Components/Frame")
 local TextBox = require("../../../Lib/UI/Components/TextBox")
 local TextButton = require("../../../Lib/UI/Components/TextButton")
 local Prompt = require("../../../Lib/UI/Prompt")
-local Waypoint = require("../../../Lib/Waypoint")
 local LoadReference = require("../../Core/LoadReference")
-local PrepareExportGamemode = require("../../Core/PrepareExportGamemode")
-local PrepareExportMap = require("../../Core/PrepareExportMap")
-local Publish = require("../../Core/Publish")
 local Navigation = require("../Navigation")
 local Widget = require("./..")
 local Examples = require("./ExamplesPage")
+local PublishPage = require("./PublishPage")
 
 local mainPage = Frame({
 	Name = "Traitor! SDK",
@@ -69,23 +64,8 @@ local publishMapButton = TextButton({
 })
 
 publishMapButton.Activated:Connect(function()
-	local selection = Selection:Get()
-	if #selection ~= 1 then
-		Message("Please select exactly one instance to publish.")
-		return
-	end
-
-	Waypoint("PublishMap", function()
-		local map = selection[1]
-
-		if map.Name == "Map" then
-			Message("Ensure map name is correctly set before publishing.")
-			return
-		end
-
-		map = PrepareExportMap(map)
-		Publish(map)
-	end)
+	PublishPage.Mode = "Map"
+	Navigation.SetPage(PublishPage.Page)
 end)
 
 local publishGamemodeButton = TextButton({
@@ -96,18 +76,8 @@ local publishGamemodeButton = TextButton({
 })
 
 publishGamemodeButton.Activated:Connect(function()
-	local selection = Selection:Get()
-	if #selection ~= 1 then
-		Message("Please select exactly one instance to publish.")
-		return
-	end
-
-	Waypoint("PublishGamemode", function()
-		local gamemode = selection[1]
-
-		gamemode = PrepareExportGamemode(gamemode)
-		Publish(gamemode)
-	end)
+	PublishPage.Mode = "Gamemode"
+	Navigation.SetPage(PublishPage.Page)
 end)
 
 local docsLink = TextBox({
