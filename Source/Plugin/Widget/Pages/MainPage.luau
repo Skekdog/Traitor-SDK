@@ -108,6 +108,15 @@ TextButton({
 	goToPublishPage("Boss")
 end)
 
+TextButton({
+	Text = "Enter Key",
+	FontSize = "Button",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	Parent = mainPage,
+}).Activated:Connect(function()
+	PromptKey(Widget.Widget)
+end)
+
 local docsLink = TextBox({
 	Text = "Documentation:\nhttps://devforum.roblox.com/t/-/4026195",
 	AutomaticSize = Enum.AutomaticSize.Y,
