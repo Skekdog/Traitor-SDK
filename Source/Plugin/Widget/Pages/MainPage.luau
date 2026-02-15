@@ -3,7 +3,9 @@ local TextBox = require("../../../Lib/UI/Components/TextBox")
 local TextButton = require("../../../Lib/UI/Components/TextButton")
 local Prompt = require("../../../Lib/UI/Prompt")
 local LoadReference = require("../../Core/LoadReference")
+local Key = require("../../Key")
 local Navigation = require("../Navigation")
+local PromptKey = require("../PromptKey")
 local Widget = require("./..")
 local Examples = require("./ExamplesPage")
 local PublishPage = require("./PublishPage")
@@ -64,6 +66,10 @@ local publishMapButton = TextButton({
 })
 
 publishMapButton.Activated:Connect(function()
+	if not Key.Get() then
+		return PromptKey(Widget.Widget)
+	end
+
 	PublishPage.Mode = "Map"
 	Navigation.SetPage(PublishPage.Page)
 end)

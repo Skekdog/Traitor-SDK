@@ -1,4 +1,5 @@
 local Frame = require("./Components/Frame")
+local TextBox = require("./Components/TextBox")
 local TextButton = require("./Components/TextButton")
 local TextLabel = require("./Components/TextLabel")
 
@@ -40,6 +41,8 @@ local frame = Frame({
 		Max = Vector2.new(350, 250),
 	},
 
+	Padding = 5,
+
 	Name = "PromptFrame",
 	Parent = backgroundFrame,
 })
@@ -49,7 +52,7 @@ do
 	listLayout.FillDirection = Enum.FillDirection.Vertical
 	listLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	listLayout.Padding = UDim.new(0, 4)
+	listLayout.Padding = UDim.new(0, 6)
 	listLayout.Parent = frame
 end
 
@@ -79,6 +82,8 @@ local messageLabel = TextLabel({
 	Name = "MessageLabel",
 	Parent = frame,
 
+	TextYAlignment = Enum.TextYAlignment.Top,
+
 	Text = "",
 
 	TextSizeConstraints = {
@@ -90,8 +95,49 @@ local messageLabel = TextLabel({
 
 do
 	local flex = Instance.new("UIFlexItem")
-	flex.FlexMode = Enum.UIFlexMode.Grow
+	flex.FlexMode = Enum.UIFlexMode.Fill
 	flex.Parent = messageLabel
+end
+
+local inputBox = TextBox({
+	Transparency = 1,
+	AutomaticSize = Enum.AutomaticSize.Y,
+
+	ZIndex = 11,
+
+	LayoutOrder = 3,
+
+	Name = "InputBox",
+	Parent = frame,
+
+	Text = "",
+
+	FontSize = "Body",
+
+	Visible = false,
+})
+
+do
+	local flex = Instance.new("UIFlexItem")
+	flex.FlexMode = Enum.UIFlexMode.Grow
+	flex.Parent = inputBox
+end
+
+local paddingFrame = Frame({
+	IsContainer = true,
+	Parent = frame,
+	Name = "Padding",
+	LayoutOrder = 4,
+	Size = UDim2.new(),
+	ZIndex = 11,
+})
+
+do
+	local uiFlexItem = Instance.new("UIFlexItem")
+	uiFlexItem.FlexMode = Enum.UIFlexMode.Custom
+	uiFlexItem.GrowRatio = 1
+	uiFlexItem.ShrinkRatio = 1
+	uiFlexItem.Parent = paddingFrame
 end
 
 local responsesFrame = Frame({
@@ -100,7 +146,7 @@ local responsesFrame = Frame({
 		Right = UDim.new(0, 4),
 	},
 
-	LayoutOrder = 3,
+	LayoutOrder = 5,
 
 	ZIndex = 11,
 
@@ -168,18 +214,20 @@ local function reset(): ()
 	confirmButton.Text = "OK"
 	cancelButton.Text = "Cancel"
 
+	inputBox.Text = ""
+
 	backgroundFrame.Visible = false
 	backgroundFrame.Parent = nil
 end
 
-local function runAndClose<T>(callback: (value: T) -> (), value: T): (...any) -> ()
+local function runAndClose<T, V>(callback: (value: T, value2: V) -> (), value: T, value2: V): (...any) -> ()
 	return function(): ()
 		reset()
-		callback(value)
+		callback(value, value2)
 	end
 end
 
-local function Prompt(widget: DockWidgetPluginGui, title: string, message: string, onResponse: (response: Response) -> (), okText: string | false?, cancelText: string | false?): ()
+local function Prompt(widget: DockWidgetPluginGui, title: string, message: string, onResponse: (response: Response, input: string?) -> (), okText: string | false?, cancelText: string | false?, requireInput: boolean?): ()
 	reset()
 
 	titleLabel.Text = "<b>" .. title .. "</b>"
@@ -199,8 +247,15 @@ local function Prompt(widget: DockWidgetPluginGui, title: string, message: strin
 		cancelButton.Visible = false
 	end
 
-	confirmConn = confirmButton.Activated:Connect(runAndClose(onResponse, "OK" :: "OK"))
-	cancelConn = cancelButton.Activated:Connect(runAndClose(onResponse, "Cancel" :: "Cancel"))
+	inputBox.Visible = requireInput or false
+	paddingFrame.Visible = not inputBox.Visible
+
+	confirmConn = confirmButton.Activated:Connect(function()
+		local input = if inputBox.Text ~= "" then inputBox.Text else nil
+		runAndClose(onResponse, "OK" :: "OK", input)()
+	end)
+
+	cancelConn = cancelButton.Activated:Connect(runAndClose(onResponse, "Cancel" :: "Cancel", nil))
 
 	backgroundFrame.Visible = true
 	backgroundFrame.Parent = widget

@@ -188,7 +188,7 @@ TextButton({
 
 	LayoutOrder = 100000,
 }).Activated:Connect(function()
-	Prompt(Widget.Widget, "Overwrite", "Are you sure you want to upload a new asset?", function(response)
+	Prompt(Widget.Widget, "Upload", "Are you sure you want to upload a new asset?", function(response)
 		if response == "Cancel" then
 			return
 		end

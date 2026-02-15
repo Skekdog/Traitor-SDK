@@ -1,4 +1,5 @@
 local HttpService = game:GetService("HttpService")
+local Key = require("../Key")
 
 local Net = {}
 
@@ -12,13 +13,12 @@ export type Response<T = nil> = {
 	Result: string,
 }
 
-local key = "abc"
-
-function Net.SetKey(newKey: string): ()
-	key = newKey
-end
-
 function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", contentType: string?, body: string?): Response<T>
+	local key = Key.Get()
+	if not key then
+		return {Success = false, Result = "Please provide a key"}
+	end
+
 	assert(endpoint:sub(1, 1) ~= "/", "endpoint must not start with a slash")
 
 	local success, response = pcall(HttpService.RequestAsync, HttpService, {
