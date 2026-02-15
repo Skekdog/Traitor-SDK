@@ -3,7 +3,7 @@ local Key = require("../Key")
 
 local Net = {}
 
-local BASE_URL = "http://localhost:27018/"
+local BASE_URL = "https://traitor-uploader.gurkz.me/"
 
 export type Response<T = nil> = {
 	Success: true,
