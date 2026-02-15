@@ -1,5 +1,6 @@
 local Lighting = game:GetService("Lighting")
 local MaterialService = game:GetService("MaterialService")
+local Selection = game:GetService("Selection")
 local NilClearChildren = require("../../../Lib/NilClearChildren")
 local Prompt = require("../../../Lib/UI/Prompt")
 local Waypoint = require("../../../Lib/Waypoint")
@@ -88,6 +89,8 @@ local function LoadMap(map: Instance): ()
 		end
 
 		map.Parent = workspace
+
+		Selection:Set({map})
 	end)
 end
 

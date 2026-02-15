@@ -1,3 +1,4 @@
+local Selection = game:GetService("Selection")
 local Message = require("../../../Lib/Message")
 local Waypoint = require("../../../Lib/Waypoint")
 
@@ -13,6 +14,8 @@ local function LoadItems(items: Instance): ()
 		end
 
 		Message("Items have been loaded! You may find them in Workspace.", "success")
+
+		Selection:Set({items})
 	end)
 end
 

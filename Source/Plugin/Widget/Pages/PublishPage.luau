@@ -147,6 +147,7 @@ local function addAssetButton(asset: number, tryPublish: (number) -> ()): ()
 			Waypoint("LoadAsset", function()
 				asset.Parent = workspace
 				Message("Asset has been loaded! You may find it in Workspace.", "success")
+				Selection:Set({asset})
 			end)
 		end
 	end)
