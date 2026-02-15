@@ -10,6 +10,9 @@ local PrepareExportBoss = require("../../Core/Export/PrepareExportBoss")
 local Net = require("../../Core/Net")
 local PrepareExportGamemode = require("../../Core/Export/PrepareExportGamemode")
 local PrepareExportMap = require("../../Core/Export/PrepareExportMap")
+local LoadBoss = require("../../Core/Load/LoadBoss")
+local LoadGamemode = require("../../Core/Load/LoadGamemode")
+local LoadMap = require("../../Core/Load/LoadMap")
 local Widget = require("./..")
 
 local PublishingPage = {}
@@ -128,10 +131,24 @@ local function addAssetButton(asset: number, tryPublish: (number) -> ()): ()
 	}).Activated:Connect(function()
 		local response = Net.FetchAssetContent(asset)
 		if not response.Success then
-			return warn(response.Result)
+			return Message(response.Result, "error")
 		end
 
-		SerializationService:DeserializeInstancesAsync(buffer.fromstring(response.Result))[1].Parent = workspace
+		local asset = SerializationService:DeserializeInstancesAsync(buffer.fromstring(response.Result))[1]
+		local assetType = asset:GetAttribute("AssetType")
+
+		if assetType == "Map" then
+			LoadMap(asset)
+		elseif assetType == "Gamemode" then
+			LoadGamemode(asset)
+		elseif assetType == "Boss" then
+			LoadBoss(asset)
+		else
+			Waypoint("LoadAsset", function()
+				asset.Parent = workspace
+				Message("Asset has been loaded! You may find it in Workspace.", "success")
+			end)
+		end
 	end)
 end
 
