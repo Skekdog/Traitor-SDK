@@ -58,32 +58,54 @@ loadExampleButton.Activated:Connect(function()
 	Navigation.SetPage(Examples)
 end)
 
-local publishMapButton = TextButton({
-	Text = "Publish Map",
-	FontSize = "Button",
-	AutomaticSize = Enum.AutomaticSize.Y,
-	Parent = mainPage,
-})
-
-publishMapButton.Activated:Connect(function()
+local function goToPublishPage(mode: typeof(PublishPage.Mode)?): ()
 	if not Key.Get() then
 		return PromptKey(Widget.Widget)
 	end
 
-	PublishPage.Mode = "Map"
+	if mode then
+		PublishPage.Mode = mode
+	end
+
 	Navigation.SetPage(PublishPage.Page)
+end
+
+local myAssetsButton = TextButton({
+	Text = "My Assets",
+	FontSize = "Button",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	Parent = mainPage
+})
+
+myAssetsButton.Activated:Connect(function()
+	goToPublishPage()
 end)
 
-local publishGamemodeButton = TextButton({
+TextButton({
+	Text = "Publish Map",
+	FontSize = "Button",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	Parent = mainPage,
+}).Activated:Connect(function()
+	goToPublishPage("Map")
+end)
+
+TextButton({
 	Text = "Publish Gamemode",
 	FontSize = "Button",
 	AutomaticSize = Enum.AutomaticSize.Y,
 	Parent = mainPage,
-})
+}).Activated:Connect(function()
+	goToPublishPage("Gamemode")
+end)
 
-publishGamemodeButton.Activated:Connect(function()
-	PublishPage.Mode = "Gamemode"
-	Navigation.SetPage(PublishPage.Page)
+TextButton({
+	Text = "Publish Boss",
+	FontSize = "Button",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	Parent = mainPage,
+}).Activated:Connect(function()
+	goToPublishPage("Boss")
 end)
 
 local docsLink = TextBox({
