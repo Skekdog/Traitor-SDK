@@ -177,6 +177,31 @@ local function tryPublish(assetId: number?): ()
 	end)
 end
 
+function PublishingPage.Refresh(): ()
+	local assets = Net.GetAvailableAssets()
+
+	for _, button in assetsFrame:GetChildren() do
+		if button.Name:sub(1, 6) == "Asset_" then
+			button:Destroy()
+		end
+	end
+
+	for _, asset in assets do
+		addAssetButton(asset, tryPublish)
+	end
+end
+
+TextButton({
+	Name = "RefreshButton",
+	Parent = assetsFrame,
+	AutomaticSize = Enum.AutomaticSize.Y,
+
+	FontSize = "Button",
+	Text = "Refresh",
+
+	LayoutOrder = 100000 - 1
+}).Activated:Connect(PublishingPage.Refresh)
+
 TextButton({
 	Name = "NewAssetButton",
 	Parent = assetsFrame,
@@ -197,17 +222,6 @@ TextButton({
 	end)
 end)
 
-task.spawn(function()
-	local assets = Net.GetAvailableAssets()
 
-	while #assets == 0 do
-		task.wait(1)
-		assets = Net.GetAvailableAssets()
-	end
-
-	for _, asset in assets do
-		addAssetButton(asset, tryPublish)
-	end
-end)
 
 return PublishingPage

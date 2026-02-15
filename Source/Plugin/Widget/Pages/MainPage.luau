@@ -67,6 +67,7 @@ local function goToPublishPage(mode: typeof(PublishPage.Mode)?): ()
 		PublishPage.Mode = mode
 	end
 
+	PublishPage.Refresh()
 	Navigation.SetPage(PublishPage.Page)
 end
 
