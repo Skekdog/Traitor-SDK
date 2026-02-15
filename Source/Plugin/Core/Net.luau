@@ -13,7 +13,7 @@ export type Response<T = nil> = {
 	Result: string,
 }
 
-function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", contentType: string?, body: string?): Response<T>
+function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", contentType: string?, body: string?, t: T): Response<T>
 	local key = Key.Get()
 	if not key then
 		return {Success = false, Result = "Please provide a key"}
@@ -50,7 +50,7 @@ function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", 
 end
 
 function Net.GetAvailableAssets(): {number}
-	local response = Net.MakeRequest<<{number}>>("assets", "GET")
+	local response = Net.MakeRequest("assets", "GET", nil, nil, (nil :: any) :: {number})
 
 	if not response.Success then
 		warn("Failed to fetch assets: " .. response.Result)
@@ -61,7 +61,7 @@ function Net.GetAvailableAssets(): {number}
 end
 
 function Net.CreateAsset(asset: buffer): Response<number>
-	return Net.MakeRequest<<number>>("assets", "POST", "application/octet-stream", buffer.tostring(asset))
+	return Net.MakeRequest("assets", "POST", "application/octet-stream", buffer.tostring(asset), (nil :: any) :: number)
 end
 
 function Net.UpdateAsset(asset: buffer, assetId: number): Response<>
@@ -69,11 +69,11 @@ function Net.UpdateAsset(asset: buffer, assetId: number): Response<>
 	buffer.writef64(request, 0, assetId)
 	buffer.copy(request, 8, asset)
 
-	return Net.MakeRequest<<nil>>("assets", "PATCH", "application/octet-stream", buffer.tostring(request))
+	return Net.MakeRequest("assets", "PATCH", "application/octet-stream", buffer.tostring(request), nil)
 end
 
 function Net.FetchAssetContent(assetId: number): Response<any>
-	return Net.MakeRequest<<any>>("asset-content/" .. assetId, "GET")
+	return Net.MakeRequest("asset-content/" .. assetId, "GET", nil, nil, nil :: any)
 end
 
 return Net
