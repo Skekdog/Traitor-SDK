@@ -1,14 +1,8 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local FetchAsset = require("../../Lib/FetchAsset")
-local Message = require("../../Lib/Message")
-local Waypoint = require("../../Lib/Waypoint")
+local Message = require("../../../Lib/Message")
+local Waypoint = require("../../../Lib/Waypoint")
 
-local REFERENCE_ID = 116031459660559
-
-local function LoadReference(): ()
-	local reference = FetchAsset(REFERENCE_ID)
-	assert(reference, "Invalid reference")
-
+local function LoadReference(reference: Instance): ()
 	Waypoint("LoadReference", function()
 		for _, child in ReplicatedStorage:GetChildren() do
 			child.Parent = nil

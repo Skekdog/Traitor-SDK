@@ -2,12 +2,13 @@ local Frame = require("../../../Lib/UI/Components/Frame")
 local TextBox = require("../../../Lib/UI/Components/TextBox")
 local TextButton = require("../../../Lib/UI/Components/TextButton")
 local Prompt = require("../../../Lib/UI/Prompt")
-local LoadReference = require("../../Core/LoadReference")
+local Examples = require("../../Core/Examples")
+local LoadExample = require("../../Core/LoadExample")
 local Key = require("../../Key")
 local Navigation = require("../Navigation")
 local PromptKey = require("../PromptKey")
 local Widget = require("./..")
-local Examples = require("./ExamplesPage")
+local ExamplesPage = require("./ExamplesPage")
 local PublishPage = require("./PublishPage")
 
 local mainPage = Frame({
@@ -42,7 +43,7 @@ local loadAPIReferenceButton = TextButton({
 loadAPIReferenceButton.Activated:Connect(function()
 	Prompt(Widget.Widget, "Load Template", "This will overwrite the contents of ReplicatedStorage! Are you sure you wish to proceed?", function(response)
 		if response == "OK" then
-			LoadReference()
+			LoadExample.API(Examples.API)
 		end
 	end)
 end)
@@ -55,7 +56,7 @@ local loadExampleButton = TextButton({
 })
 
 loadExampleButton.Activated:Connect(function()
-	Navigation.SetPage(Examples)
+	Navigation.SetPage(ExamplesPage)
 end)
 
 local function goToPublishPage(mode: typeof(PublishPage.Mode)?): ()

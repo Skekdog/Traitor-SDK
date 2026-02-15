@@ -135,6 +135,8 @@ local function PrepareExportMap(map: Instance): buffer
 	gravity(map)
 	defaultAttributes(map)
 
+	map:SetAttribute("AssetType", "Map")
+
 	return SerializationService:SerializeInstancesAsync({map})
 end
 

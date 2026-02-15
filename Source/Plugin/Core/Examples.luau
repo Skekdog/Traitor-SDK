@@ -14,4 +14,6 @@ Examples.Maps = {
 
 Examples.Items = 71521398249549
 
+Examples.API = 116031459660559
+
 return Examples
