@@ -1,9 +1,24 @@
 local Lighting = game:GetService("Lighting")
 local MaterialService = game:GetService("MaterialService")
 local NilClearChildren = require("../../../Lib/NilClearChildren")
+local Prompt = require("../../../Lib/UI/Prompt")
 local Waypoint = require("../../../Lib/Waypoint")
+local Widget = require("../../Widget")
 
 local function LoadMap(map: Instance): ()
+	local response: "Cancel" | "OK"?
+	Prompt(Widget.Widget, "Warning", "This will overwrite your entire game!", function(res)
+		response = res
+	end)
+
+	while not response do
+		task.wait()
+	end
+
+	if response ~= "OK" then
+		return
+	end
+
 	Waypoint("LoadMap", function()
 		for _, child in workspace:GetChildren() do
 			pcall(function()

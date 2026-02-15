@@ -1,7 +1,6 @@
 local Frame = require("../../../Lib/UI/Components/Frame")
 local TextBox = require("../../../Lib/UI/Components/TextBox")
 local TextButton = require("../../../Lib/UI/Components/TextButton")
-local Prompt = require("../../../Lib/UI/Prompt")
 local Examples = require("../../Core/Examples")
 local LoadExample = require("../../Core/LoadExample")
 local Key = require("../../Key")
@@ -41,11 +40,7 @@ local loadAPIReferenceButton = TextButton({
 })
 
 loadAPIReferenceButton.Activated:Connect(function()
-	Prompt(Widget.Widget, "Load Template", "This will overwrite the contents of ReplicatedStorage! Are you sure you wish to proceed?", function(response)
-		if response == "OK" then
-			LoadExample.API(Examples.API)
-		end
-	end)
+	LoadExample.API(Examples.API)
 end)
 
 local loadExampleButton = TextButton({
