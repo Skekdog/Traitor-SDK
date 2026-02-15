@@ -6,9 +6,10 @@ local TextBox = require("../../../Lib/UI/Components/TextBox")
 local TextButton = require("../../../Lib/UI/Components/TextButton")
 local Prompt = require("../../../Lib/UI/Prompt")
 local Waypoint = require("../../../Lib/Waypoint")
+local PrepareExportBoss = require("../../Core/Export/PrepareExportBoss")
 local Net = require("../../Core/Net")
-local PrepareExportGamemode = require("../../Core/PrepareExportGamemode")
-local PrepareExportMap = require("../../Core/PrepareExportMap")
+local PrepareExportGamemode = require("../../Core/Export/PrepareExportGamemode")
+local PrepareExportMap = require("../../Core/Export/PrepareExportMap")
 local Widget = require("./..")
 
 local PublishingPage = {}
@@ -155,7 +156,7 @@ local function tryPublish(assetId: number?): ()
 		elseif PublishingPage.Mode == "Gamemode" then
 			data = PrepareExportGamemode(asset)
 		elseif PublishingPage.Mode == "Boss" then
-			data = buffer.create(1)
+			data = PrepareExportBoss(asset)
 		end
 
 		local response
