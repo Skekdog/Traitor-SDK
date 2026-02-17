@@ -72,8 +72,8 @@ function Net.UpdateAsset(asset: buffer, assetId: number): Response<>
 	return Net.MakeRequest("assets", "PATCH", "application/octet-stream", buffer.tostring(request), nil)
 end
 
-function Net.FetchAssetContent(assetId: number): Response<any>
-	return Net.MakeRequest("asset-content/" .. assetId, "GET", nil, nil, nil :: any)
+function Net.FetchAssetContent(assetId: number): Response<string>
+	return Net.MakeRequest("asset-content/" .. assetId, "GET", nil, nil, (nil :: any) :: string)
 end
 
 return Net
