@@ -2,18 +2,18 @@
 local Examples = {}
 
 Examples.Gamemodes = {
-	Framed = 85240118809989,
-	Elimination = 73629714476044,
-	ThoseYouTrust = 117084689582342,
-} :: {[string]: number}
+	Framed = "139092719483295",
+	Elimination = "81237358985439",
+	ThoseYouTrust = "119447016204491",
+} :: {[string]: string}
 
 Examples.Maps = {
-	Facility = 122192823669641,
-	TestMap = 125557102994928,
-} :: {[string]: number}
+	Facility = "126472909699829",
+	TestMap = "109123324659232",
+} :: {[string]: string}
 
-Examples.Items = 71521398249549
+Examples.Items = "81535955487145"
 
-Examples.API = 116031459660559
+Examples.API = "117390899198330"
 
 return Examples

@@ -1,5 +1,4 @@
 local Selection = game:GetService("Selection")
-local SerializationService = game:GetService("SerializationService")
 local Message = require("../../../Lib/Message")
 local Frame = require("../../../Lib/UI/Components/Frame")
 local TextBox = require("../../../Lib/UI/Components/TextBox")
@@ -129,12 +128,11 @@ local function addAssetButton(asset: string, tryPublish: (string) -> ()): ()
 			Right = 5,
 		}
 	}).Activated:Connect(function()
-		local response = Net.FetchAssetContent(asset)
-		if not response.Success then
-			return Message(response.Result, "error")
+		local asset = Net.FetchAssetContent(asset)
+		if typeof(asset) == "string" then
+			return Message(asset, "error")
 		end
 
-		local asset = SerializationService:DeserializeInstancesAsync(buffer.fromstring(response.Result))[1]
 		local assetType = asset:GetAttribute("AssetType")
 
 		if assetType == "Map" then

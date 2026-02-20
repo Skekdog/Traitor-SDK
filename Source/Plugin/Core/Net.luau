@@ -1,4 +1,5 @@
 local HttpService = game:GetService("HttpService")
+local SerializationService = game:GetService("SerializationService")
 local Key = require("../Key")
 
 local Net = {}
@@ -13,9 +14,10 @@ export type Response<T = nil> = {
 	Result: string,
 }
 
-function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", contentType: string?, body: string?, t: T): Response<T>
+function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", contentType: string?, body: string?, t: T, noAuth: boolean?): Response<T>
 	local key = Key.Get()
-	if not key then
+	if not key and not noAuth then
+		print(noAuth)
 		return {Success = false, Result = "Please provide a key"}
 	end
 
@@ -26,8 +28,8 @@ function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", 
 		Method = method,
 		Body = body,
 		Headers = {
-			Authorization = "Bearer " .. key,
-			["Content-Type"] = contentType :: string
+			Authorization = if not noAuth then "Bearer " .. assert(key) else nil,
+			["Content-Type"] = contentType or nil
 		},
 		Compress = Enum.HttpCompression.None,
 	})
@@ -72,8 +74,12 @@ function Net.UpdateAsset(asset: buffer, assetId: string): Response<>
 	return Net.MakeRequest("assets", "PATCH", "application/octet-stream", buffer.tostring(request), nil)
 end
 
-function Net.FetchAssetContent(assetId: string): Response<string>
-	return Net.MakeRequest("asset-content/" .. assetId, "GET", nil, nil, (nil :: any) :: string)
+function Net.FetchAssetContent(assetId: string, noAuth: boolean?): Instance | string
+	local result = Net.MakeRequest("asset-content/" .. assetId, "GET", nil, nil, (nil :: any) :: string, noAuth)
+	if not result.Success then
+		return result.Result
+	end
+	return SerializationService:DeserializeInstancesAsync(buffer.fromstring(result.Result))[1]
 end
 
 return Net
