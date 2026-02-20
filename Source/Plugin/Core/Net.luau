@@ -49,30 +49,30 @@ function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", 
 	}
 end
 
-function Net.GetAvailableAssets(): {number}
-	local response = Net.MakeRequest("assets", "GET", nil, nil, (nil :: any) :: {number})
+function Net.GetAvailableAssets(): {private: {string}, public: {string}}
+	local response = Net.MakeRequest("assets", "GET", nil, nil, (nil :: any) :: {private: {string}, public: {string}})
 
 	if not response.Success then
 		warn("Failed to fetch assets: " .. response.Result)
-		return {}
+		return {private = {}, public = {}}
 	end
 
 	return response.Result
 end
 
-function Net.CreateAsset(asset: buffer): Response<number>
-	return Net.MakeRequest("assets", "POST", "application/octet-stream", buffer.tostring(asset), (nil :: any) :: number)
+function Net.CreateAsset(asset: buffer): Response<string>
+	return Net.MakeRequest("assets", "POST", "application/octet-stream", buffer.tostring(asset), (nil :: any) :: string)
 end
 
-function Net.UpdateAsset(asset: buffer, assetId: number): Response<>
+function Net.UpdateAsset(asset: buffer, assetId: string): Response<>
 	local request = buffer.create(buffer.len(asset) + 8 + 1)
-	buffer.writef64(request, 0, assetId)
+	buffer.writef64(request, 0, tonumber(assetId) or 0)
 	buffer.copy(request, 8, asset)
 
 	return Net.MakeRequest("assets", "PATCH", "application/octet-stream", buffer.tostring(request), nil)
 end
 
-function Net.FetchAssetContent(assetId: number): Response<string>
+function Net.FetchAssetContent(assetId: string): Response<string>
 	return Net.MakeRequest("asset-content/" .. assetId, "GET", nil, nil, (nil :: any) :: string)
 end
 

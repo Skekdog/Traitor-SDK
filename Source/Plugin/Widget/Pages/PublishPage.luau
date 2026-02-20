@@ -44,7 +44,7 @@ do
 	listLayout.Parent = assetsFrame
 end
 
-local function addAssetButton(asset: number, tryPublish: (number) -> ()): ()
+local function addAssetButton(asset: string, tryPublish: (string) -> ()): ()
 	local frame = Frame({
 		Name = "Asset_" .. asset,
 		Parent = assetsFrame,
@@ -153,7 +153,7 @@ local function addAssetButton(asset: number, tryPublish: (number) -> ()): ()
 	end)
 end
 
-local function tryPublish(assetId: number?): ()
+local function tryPublish(assetId: string?): ()
 	local selection = Selection:Get()
 	if #selection ~= 1 then
 		Message("Please select exactly one instance to publish.")
@@ -191,7 +191,7 @@ local function tryPublish(assetId: number?): ()
 		Message("Uploaded! You may load this in Labs.", "success")
 
 		if not assetId then
-			addAssetButton(response.Result :: number, tryPublish)
+			addAssetButton(response.Result :: string, tryPublish)
 		end
 	end)
 end
@@ -205,7 +205,8 @@ function PublishingPage.Refresh(): ()
 		end
 	end
 
-	for _, asset in assets do
+	print(assets.public)
+	for _, asset in assets.private do
 		addAssetButton(asset, tryPublish)
 	end
 end
