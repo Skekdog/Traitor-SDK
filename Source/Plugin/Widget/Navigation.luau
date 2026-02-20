@@ -55,7 +55,7 @@ local backButton = ImageButton({
 })
 
 local homeButton = ImageButton({
-	Image = Content.fromAssetId(15927926340),
+	Image = Content.fromAssetId(127265001702327),
 	Parent = controlsFrame,
 	Size = UDim2.fromScale(0.5, 1),
 	AspectRatio = {
