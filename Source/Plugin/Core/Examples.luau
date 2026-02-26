@@ -4,7 +4,7 @@ local Examples = {}
 Examples.Gamemodes = {
 	Framed = "139092719483295",
 	Elimination = "81237358985439",
-	ThoseYouTrust = "119447016204491",
+	Traitor = "119447016204491",
 } :: {[string]: string}
 
 Examples.Maps = {
