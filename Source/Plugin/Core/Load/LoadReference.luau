@@ -7,7 +7,7 @@ local Widget = require("../../Widget")
 
 local function LoadReference(reference: Instance): ()
 	local response: "Cancel" | "OK"?
-	Prompt(Widget.Widget, "Warning", "This will overwrite the contents of ReplicatedStorage!", function(res)
+	Prompt(Widget.Widget, "Warning", "This may overwrite some contents of ReplicatedStorage!", function(res)
 		response = res
 	end)
 
@@ -20,11 +20,11 @@ local function LoadReference(reference: Instance): ()
 	end
 
 	Waypoint("LoadReference", function()
-		for _, child in ReplicatedStorage:GetChildren() do
-			child.Parent = nil
+		local old = ReplicatedStorage:FindFirstChild(reference.Name)
+		if old then
+			old.Parent = nil
 		end
 
-		reference.Name = "API"
 		reference.Parent = ReplicatedStorage
 
 		Message("Reference has been loaded!", "success")

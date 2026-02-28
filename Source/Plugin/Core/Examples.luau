@@ -16,4 +16,6 @@ Examples.Items = "81535955487145"
 
 Examples.API = "117390899198330"
 
+Examples.Assets = "104086335415869"
+
 return Examples

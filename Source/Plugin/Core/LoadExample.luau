@@ -39,4 +39,12 @@ function LoadExample.API(id: string): ()
 	LoadReference(asset)
 end
 
+function LoadExample.Assets(id: string): ()
+	local asset = Net.FetchAssetContent(id, true)
+	if typeof(asset) == "string" then
+		return Message(asset, "error")
+	end
+	LoadReference(asset)
+end
+
 return LoadExample

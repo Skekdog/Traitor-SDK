@@ -58,6 +58,17 @@ TextLabel({
 	Parent = examples,
 })
 
+TextLabel({
+	Text = "Assets",
+	LayoutOrder = 4000,
+	FontSize = "Heading",
+	IsContainer = true,
+	AutomaticSize = Enum.AutomaticSize.Y,
+	TextXAlignment = Enum.TextXAlignment.Left,
+	Name = "AssetsLabel",
+	Parent = examples,
+})
+
 local i = 0
 for map, id in Examples.Maps do
 	i += 1
@@ -115,6 +126,20 @@ do
 		LoadExample.Items(Examples.Items)
 	end)
 end
+
+TextButton({
+	Text = "Assets",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	FontSize = "Button",
+	LayoutOrder = 4001,
+	TextXAlignment = Enum.TextXAlignment.Left,
+	Padding = {
+		Left = 20,
+	},
+	Parent = examples,
+}).Activated:Connect(function()
+	LoadExample.Assets(Examples.Assets)
+end)
 
 i = nil
 
