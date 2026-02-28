@@ -5,6 +5,7 @@ Examples.Gamemodes = {
 	Framed = "139092719483295",
 	Elimination = "81237358985439",
 	Traitor = "119447016204491",
+	PropHunt = "108921425683278",
 } :: {[string]: string}
 
 Examples.Maps = {
