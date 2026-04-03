@@ -23,14 +23,16 @@ function Net.MakeRequest<T>(endpoint: string, method: "POST" | "PATCH" | "GET", 
 
 	assert(endpoint:sub(1, 1) ~= "/", "endpoint must not start with a slash")
 
+	local headers: {[string]: string?} = {
+		Authorization = if not noAuth then "Bearer " .. assert(key) else nil,
+		["Content-Type"] = contentType,
+	}
+
 	local success, response = pcall(HttpService.RequestAsync, HttpService, {
 		Url = BASE_URL .. endpoint,
 		Method = method,
 		Body = body,
-		Headers = {
-			Authorization = if not noAuth then "Bearer " .. assert(key) else nil,
-			["Content-Type"] = contentType or nil
-		},
+		Headers = headers :: any,
 		Compress = Enum.HttpCompression.None,
 	})
 
