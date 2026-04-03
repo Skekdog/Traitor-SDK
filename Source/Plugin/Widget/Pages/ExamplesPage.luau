@@ -48,19 +48,8 @@ TextLabel({
 })
 
 TextLabel({
-	Text = "Items",
-	LayoutOrder = 3000,
-	FontSize = "Heading",
-	IsContainer = true,
-	AutomaticSize = Enum.AutomaticSize.Y,
-	TextXAlignment = Enum.TextXAlignment.Left,
-	Name = "ItemsLabel",
-	Parent = examples,
-})
-
-TextLabel({
 	Text = "Assets",
-	LayoutOrder = 4000,
+	LayoutOrder = 3000,
 	FontSize = "Heading",
 	IsContainer = true,
 	AutomaticSize = Enum.AutomaticSize.Y,
@@ -114,7 +103,7 @@ do
 		Text = "Items",
 		AutomaticSize = Enum.AutomaticSize.Y,
 		FontSize = "Button",
-		LayoutOrder = 3001,
+		LayoutOrder = 3002,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Padding = {
 			Left = 20,
@@ -131,7 +120,7 @@ TextButton({
 	Text = "Assets",
 	AutomaticSize = Enum.AutomaticSize.Y,
 	FontSize = "Button",
-	LayoutOrder = 4001,
+	LayoutOrder = 3001,
 	TextXAlignment = Enum.TextXAlignment.Left,
 	Padding = {
 		Left = 20,
@@ -139,6 +128,20 @@ TextButton({
 	Parent = examples,
 }).Activated:Connect(function()
 	LoadExample.Assets(Examples.Assets)
+end)
+
+TextButton({
+	Text = "Interactables",
+	AutomaticSize = Enum.AutomaticSize.Y,
+	FontSize = "Button",
+	LayoutOrder = 3003,
+	TextXAlignment = Enum.TextXAlignment.Left,
+	Padding = {
+		Left = 20,
+	},
+	Parent = examples,
+}).Activated:Connect(function()
+	LoadExample.Interactables(Examples.Interactables)
 end)
 
 i = nil

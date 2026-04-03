@@ -28,7 +28,15 @@ function LoadExample.Items(id: string): ()
 	if typeof(asset) == "string" then
 		return Message(asset, "error")
 	end
-	LoadItems(asset)
+	LoadItems(asset, "Items")
+end
+
+function LoadExample.Interactables(id: string): ()
+	local asset = Net.FetchAssetContent(id, true)
+	if typeof(asset) == "string" then
+		return Message(asset, "error")
+	end
+	LoadItems(asset, "Interactables")
 end
 
 function LoadExample.API(id: string): ()
@@ -36,7 +44,7 @@ function LoadExample.API(id: string): ()
 	if typeof(asset) == "string" then
 		return Message(asset, "error")
 	end
-	LoadReference(asset)
+	LoadReference(asset, "API has")
 end
 
 function LoadExample.Assets(id: string): ()
@@ -44,7 +52,7 @@ function LoadExample.Assets(id: string): ()
 	if typeof(asset) == "string" then
 		return Message(asset, "error")
 	end
-	LoadReference(asset)
+	LoadReference(asset, "Assets have")
 end
 
 return LoadExample

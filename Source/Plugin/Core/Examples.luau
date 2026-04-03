@@ -15,6 +15,8 @@ Examples.Maps = {
 
 Examples.Items = "81535955487145"
 
+Examples.Interactables = "114739037638623"
+
 Examples.API = "117390899198330"
 
 Examples.Assets = "104086335415869"

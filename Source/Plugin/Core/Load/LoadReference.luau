@@ -5,7 +5,7 @@ local Prompt = require("../../../Lib/UI/Prompt")
 local Waypoint = require("../../../Lib/Waypoint")
 local Widget = require("../../Widget")
 
-local function LoadReference(reference: Instance): ()
+local function LoadReference(reference: Instance, refer: string): ()
 	local response: "Cancel" | "OK"?
 	Prompt(Widget.Widget, "Warning", "This may overwrite some contents of ReplicatedStorage!", function(res)
 		response = res
@@ -27,7 +27,7 @@ local function LoadReference(reference: Instance): ()
 
 		reference.Parent = ReplicatedStorage
 
-		Message("Reference has been loaded!", "success")
+		Message(refer .. " been loaded!", "success")
 
 		Selection:Set({reference})
 	end)

@@ -2,7 +2,7 @@ local Selection = game:GetService("Selection")
 local Message = require("../../../Lib/Message")
 local Waypoint = require("../../../Lib/Waypoint")
 
-local function LoadItems(items: Instance): ()
+local function LoadItems(items: Instance, refer: string): ()
 	Waypoint("LoadItems", function()
 		local success, err = pcall(function()
 			items.Parent = workspace
@@ -13,7 +13,7 @@ local function LoadItems(items: Instance): ()
 			Message(err)
 		end
 
-		Message("Items have been loaded! You may find them in Workspace.", "success")
+		Message(refer .. " have been loaded! You may find them in Workspace.", "success")
 
 		Selection:Set({items})
 	end)
