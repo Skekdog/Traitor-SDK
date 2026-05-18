@@ -41,7 +41,7 @@ local function getAllProperties(class: string): {string}
 
 	for _, property in ReflectionService:GetPropertiesOfClass(class, {ExcludeInherited = true, ExcludeDisplay = true}) do
 		if property.Permits.Read and property.Permits.Write then
-			table.insert(properties, property)
+			table.insert(properties, property.Name)
 		end
 	end
 
@@ -51,7 +51,7 @@ end
 local lightingProperties = getAllProperties("Lighting")
 local terrainProperties = getAllProperties("Terrain")
 
-local function waterSettings(map: Instance): ()
+local function terrainSettings(map: Instance): ()
 	removeOld(map, "WaterSettings")
 
 	local folder = Instance.new("Configuration")
@@ -79,6 +79,17 @@ local function lightingSettings(map: Instance): ()
 	end
 
 	folder.Parent = map
+end
+
+local function clouds(map: Instance): ()
+	removeOld(map, "Clouds")
+
+	local foundClouds = workspace.Terrain:FindFirstChildWhichIsA("Clouds")
+	if foundClouds then
+		local new = foundClouds:Clone()
+		new.Name = "Clouds"
+		new.Parent = map
+	end
 end
 
 local function materials(map: Instance): ()
@@ -119,7 +130,8 @@ local function PrepareExportMap(map: Instance): buffer
 
 	terrainRegion(map)
 	terrainColors(map)
-	waterSettings(map)
+	terrainSettings(map)
+	clouds(map)
 	lightingSettings(map)
 	materials(map)
 	gravity(map)
