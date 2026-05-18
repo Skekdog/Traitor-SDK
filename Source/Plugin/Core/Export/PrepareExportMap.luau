@@ -1,6 +1,7 @@
 local Lighting = game:GetService("Lighting")
 local MaterialService = game:GetService("MaterialService")
 local Players = game:GetService("Players")
+local ReflectionService = game:GetService("ReflectionService")
 local SerializationService = game:GetService("SerializationService")
 local StudioService = game:GetService("StudioService")
 
@@ -35,13 +36,20 @@ local function terrainColors(map: Instance): ()
 	folder.Parent = map
 end
 
-local waterProperties = {
-	"WaterColor",
-	"WaterTransparency",
-	"WaterWaveSpeed",
-	"WaterWaveSize",
-	"WaterReflectance"
-}
+local function getAllProperties(class: string): {string}
+	local properties: {string} = {}
+
+	for _, property in ReflectionService:GetPropertiesOfClass(class, {ExcludeInherited = true, ExcludeDisplay = true}) do
+		if property.Permits.Read and property.Permits.Write then
+			table.insert(properties, property)
+		end
+	end
+
+	return properties
+end
+
+local lightingProperties = getAllProperties("Lighting")
+local terrainProperties = getAllProperties("Terrain")
 
 local function waterSettings(map: Instance): ()
 	removeOld(map, "WaterSettings")
@@ -49,30 +57,12 @@ local function waterSettings(map: Instance): ()
 	local folder = Instance.new("Configuration")
 	folder.Name = "WaterSettings"
 
-	for _, property in waterProperties do
+	for _, property in terrainProperties do
 		folder:SetAttribute(property, (workspace.Terrain :: {[string]: any})[property])
 	end
 
 	folder.Parent = map
 end
-
--- Awaiting ReflectionService 🙏
-local lightingProperties = {
-	"ClockTime",
-	"ColorShift_Bottom",
-	"FogColor",
-	"FogEnd",
-	"EnvironmentDiffuseScale",
-	"EnvironmentSpecularScale",
-	"GlobalShadows",
-	"FogStart",
-	"Ambient",
-	"OutdoorAmbient",
-	"GeographicLatitude",
-	"Brightness",
-	"ColorShift_Top",
-	"ExposureCompensation",
-}
 
 local function lightingSettings(map: Instance): ()
 	removeOld(map, "LightingSettings")
