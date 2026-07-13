@@ -5,6 +5,22 @@ local ReflectionService = game:GetService("ReflectionService")
 local SerializationService = game:GetService("SerializationService")
 local StudioService = game:GetService("StudioService")
 
+local METADATA_SOURCE = [[
+--!strict
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Types = require(ReplicatedStorage.API.Types)
+
+local metadata: Types.MapMetadata = {
+	DisplayName = nil,
+	Description = "No description",
+	Authors = "[AUTHORS]",
+	Icon = Content.none,
+}
+
+return metadata
+]]
+
 local function removeOld(map: Instance, name: string): ()
 	local old = map:FindFirstChild(name)
 	if old then
@@ -114,15 +130,18 @@ local function gravity(map: Instance): ()
 	map:SetAttribute("Gravity", workspace.Gravity)
 end
 
-local function defaultAttributes(map: Instance): ()
-	if not map:GetAttribute("Authors") then
-		local success, username: string = pcall(Players.GetNameFromUserIdAsync, Players, StudioService:GetUserId())
-		map:SetAttribute("Authors", if success then "@" .. username else "unknown author")
+local function defaultMetadata(map: Instance): ()
+	if map:FindFirstChild("Metadata") then
+		return
 	end
 
-	if not map:GetAttribute("Description") then
-		map:SetAttribute("Description", "No description")
-	end
+	local success, username: string = pcall(Players.GetNameFromUserIdAsync, Players, StudioService:GetUserId())
+	local authors = if success then "@" .. username else "unknown author"
+
+	local metadataModule = Instance.new("ModuleScript")
+	metadataModule.Name = "Metadata"
+	metadataModule.Source = METADATA_SOURCE:gsub("%[AUTHORS]", authors)
+	metadataModule.Parent = map
 end
 
 local function PrepareExportMap(map: Instance): buffer
@@ -135,7 +154,7 @@ local function PrepareExportMap(map: Instance): buffer
 	lightingSettings(map)
 	materials(map)
 	gravity(map)
-	defaultAttributes(map)
+	defaultMetadata(map)
 
 	map:SetAttribute("AssetType", "Map")
 
